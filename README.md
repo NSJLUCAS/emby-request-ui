@@ -160,10 +160,5 @@ docker compose up -d --build
 docker compose logs -f app
 ```
 
-## 注意
 
-- `.env` 不要提交到 GitHub
-- 上线后请修改默认后台密码
-- `ADMIN_SESSION_SECRET` 请换成你自己的随机字符串
-- 如果你改了端口，记得服务器防火墙也要放行对应端口
 
