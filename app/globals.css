@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #020617;
+  --surface: rgba(3, 18, 52, 0.74);
+  --surface-border: rgba(71, 85, 105, 0.55);
+  --text-main: #e5edf9;
+  --text-muted: #94a3b8;
+  --text-soft: #cbd5e1;
+  --accent: #22d3ee;
+  --field-bg: rgba(15, 23, 42, 0.7);
+  --field-border: rgba(71, 85, 105, 0.8);
+  --focus-ring: rgba(34, 211, 238, 0.35);
+  --toggle-bg: rgba(15, 23, 42, 0.72);
+  --toggle-border: rgba(100, 116, 139, 0.55);
+  --table-head-bg: rgba(15, 23, 42, 0.8);
+  --table-row-bg: rgba(15, 23, 42, 0.45);
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f1f5f9;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-border: rgba(15, 23, 42, 0.16);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-soft: #1e293b;
+  --accent: #0ea5e9;
+  --field-bg: rgba(255, 255, 255, 0.95);
+  --field-border: rgba(15, 23, 42, 0.2);
+  --focus-ring: rgba(14, 165, 233, 0.25);
+  --toggle-bg: rgba(255, 255, 255, 0.85);
+  --toggle-border: rgba(15, 23, 42, 0.22);
+  --table-head-bg: rgba(241, 245, 249, 0.98);
+  --table-row-bg: rgba(255, 255, 255, 0.8);
+}
+
+body {
+  position: relative;
+  color: var(--text-main);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 10%, rgba(59, 130, 246, 0.14), transparent 42%),
+    radial-gradient(circle at 92% 16%, rgba(16, 185, 129, 0.1), transparent 46%),
+    radial-gradient(circle at 50% 90%, rgba(148, 163, 184, 0.12), transparent 35%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(100, 116, 139, 0.35) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+  opacity: 0.16;
+}
+
+@layer components {
+  .card-surface {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--text-main);
+    @apply rounded-2xl p-6 shadow-glow backdrop-blur;
+  }
+
+  .form-control {
+    background: var(--field-bg);
+    color: var(--text-main);
+    border: 1px solid var(--field-border);
+    @apply block w-full rounded-lg px-3.5 py-2.5 text-sm outline-none transition;
+  }
+
+  .form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 0.9;
+  }
+
+  .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+
+  .field-label {
+    color: var(--text-soft);
+    @apply mb-2 block text-sm font-medium;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 20;
+    background: var(--toggle-bg);
+    color: var(--text-main);
+    border: 1px solid var(--toggle-border);
+    @apply rounded-full px-4 py-2 text-xs font-medium tracking-wide backdrop-blur transition hover:opacity-90;
+  }
+
+  .page-kicker {
+    color: var(--accent);
+    @apply mb-2 text-xs uppercase tracking-[0.2em];
+  }
+
+  .page-title {
+    color: var(--text-main);
+    @apply text-2xl font-semibold;
+  }
+
+  .page-desc {
+    color: var(--text-muted);
+    @apply mt-2 text-sm;
+  }
+
+  .table-head {
+    background: var(--table-head-bg);
+    color: var(--text-muted);
+  }
+
+  .table-row {
+    background: var(--table-row-bg);
+    border-top: 1px solid var(--surface-border);
+  }
+
+  .alert-success {
+    @apply rounded-lg border px-3 py-2 text-sm;
+    border-color: rgba(16, 185, 129, 0.45);
+    background: rgba(16, 185, 129, 0.12);
+    color: #059669;
+  }
+
+  .alert-error {
+    @apply rounded-lg border px-3 py-2 text-sm;
+    border-color: rgba(244, 63, 94, 0.45);
+    background: rgba(244, 63, 94, 0.12);
+    color: #be123c;
+  }
+
+  .status-select {
+    @apply w-28 rounded-md border px-2.5 py-1.5 text-xs font-medium outline-none transition focus:ring-2 disabled:cursor-not-allowed disabled:opacity-60;
+    border-color: var(--field-border);
+    background: var(--field-bg);
+    color: var(--text-main);
+  }
+
+  .status-pending {
+    border-color: rgba(251, 191, 36, 0.45);
+    background: rgba(251, 191, 36, 0.12);
+    color: #92400e;
+  }
+
+  .status-completed {
+    border-color: rgba(16, 185, 129, 0.45);
+    background: rgba(16, 185, 129, 0.12);
+    color: #065f46;
+  }
+
+  .status-rejected {
+    border-color: rgba(244, 63, 94, 0.45);
+    background: rgba(244, 63, 94, 0.12);
+    color: #9f1239;
+  }
+}
