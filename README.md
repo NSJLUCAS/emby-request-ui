@@ -39,6 +39,26 @@ APP_PORT=6000 TELEGRAM_BOT_TOKEN=xxx TELEGRAM_CHAT_ID=xxx bash -c "$(curl -fsSL 
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/NSJLUCAS/emby-request-ui/main/scripts/update.sh)"
 ```
 
+## 一键卸载
+
+标准卸载（删除项目 + 容器 + 数据卷，数据库数据会被清空）：
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/NSJLUCAS/emby-request-ui/main/scripts/uninstall.sh)"
+```
+
+保留数据库数据（只删除项目和容器）：
+
+```bash
+PURGE_DATA=0 bash -c "$(curl -fsSL https://raw.githubusercontent.com/NSJLUCAS/emby-request-ui/main/scripts/uninstall.sh)"
+```
+
+免确认直接卸载（自动执行）：
+
+```bash
+FORCE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/NSJLUCAS/emby-request-ui/main/scripts/uninstall.sh)"
+```
+
 ## 管理后台
 
 - 登录页：`/admin/login`
