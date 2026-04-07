@@ -13,8 +13,11 @@ services:
       PORT: 3000
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-emby_request}?schema=public
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-please-change-this-secret-in-production}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      TELEGRAM_CONFIG_SECRET: ${TELEGRAM_CONFIG_SECRET:-please-change-this-secret-in-production}
     ports:
-      - "5900:3000"
+      - "${APP_PORT:-5900}:3000"
 
   db:
     image: postgres:16-alpine
