@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getAuthenticatedAdmin } from "@/lib/admin-auth";
+import AdminNav from "./admin-nav";
 import { prisma } from "@/lib/prisma";
-import AdminSecurityPanel from "./admin-security-panel";
 import DeleteRequestButton from "./delete-request-button";
 import StatusSelect from "./status-select";
 
@@ -34,7 +34,10 @@ export default async function AdminPage() {
           <p className="page-desc">数据来自 PostgreSQL（Prisma）。</p>
         </div>
 
-        <AdminSecurityPanel username={session.username} />
+        <AdminNav current="requests" />
+        <p className="mb-4 text-sm" style={{ color: "var(--text-muted)" }}>
+          当前管理员：<span className="font-semibold" style={{ color: "var(--text-main)" }}>{session.username}</span>
+        </p>
 
         {loadError && (
           <p className="alert-error mb-4">

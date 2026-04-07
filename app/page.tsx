@@ -72,13 +72,22 @@ export default function HomePage() {
               <h1 className="page-title">电影 / 电视剧 / 动漫 / 纪录片 求片</h1>
               <p className="page-desc">提交后会自动跳转到公开进度页，所有人都可查看。</p>
             </div>
-            <Link
-              className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-85"
-              href="/progress"
-              style={{ borderColor: "var(--field-border)", color: "var(--text-main)" }}
-            >
-              查看进度页
-            </Link>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link
+                className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-85"
+                href="/progress"
+                style={{ borderColor: "var(--field-border)", color: "var(--text-main)" }}
+              >
+                查看进度页
+              </Link>
+              <Link
+                className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-85"
+                href="/admin/login"
+                style={{ borderColor: "var(--field-border)", color: "var(--text-main)" }}
+              >
+                管理员登录
+              </Link>
+            </div>
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>

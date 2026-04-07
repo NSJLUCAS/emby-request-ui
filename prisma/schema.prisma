@@ -34,3 +34,12 @@ model AdminCredential {
 
   @@map("admin_credentials")
 }
+
+model AppSetting {
+  key       String   @id
+  value     Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("app_settings")
+}

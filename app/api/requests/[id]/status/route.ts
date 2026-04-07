@@ -1,11 +1,9 @@
-import { Prisma } from "@prisma/client";
-import { NextResponse } from "next/server";
-import { getAuthenticatedAdmin } from "@/lib/admin-auth";
-import { prisma } from "@/lib/prisma";
+﻿import { getAuthenticatedAdmin } from "@/lib/admin-auth";
+import { AppError } from "@/lib/app-error";
+import { handleApiError, jsonError, jsonOk } from "@/lib/http-response";
+import { updateRequestStatus } from "@/lib/services/request-service";
 
 export const dynamic = "force-dynamic";
-
-const allowedStatuses = new Set(["待处理", "已完成", "已拒绝"]);
 
 type RouteContext = {
   params: Promise<{ id: string }>;
@@ -19,39 +17,20 @@ export async function PATCH(req: Request, { params }: RouteContext) {
   try {
     const session = await getAuthenticatedAdmin();
     if (!session) {
-      return NextResponse.json({ error: "未登录，无法修改状态" }, { status: 401 });
+      return jsonError("未登录，无法修改状态", 401);
     }
 
     const { id } = await params;
-    const requestId = Number(id);
+    const body = (await req.json().catch(() => {
+      throw new AppError("请求体格式错误", 400);
+    })) as UpdateStatusBody;
+    const updated = await updateRequestStatus(id, body.status ?? "");
 
-    if (!Number.isInteger(requestId) || requestId <= 0) {
-      return NextResponse.json({ error: "无效的记录 ID" }, { status: 400 });
-    }
-
-    const body = (await req.json()) as UpdateStatusBody;
-    const status = (body.status ?? "").trim();
-
-    if (!allowedStatuses.has(status)) {
-      return NextResponse.json({ error: "无效状态" }, { status: 400 });
-    }
-
-    const updated = await prisma.request.update({
-      where: { id: requestId },
-      data: { status }
-    });
-
-    return NextResponse.json({
-      ok: true,
+    return jsonOk({
       id: updated.id,
       status: updated.status
     });
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
-      return NextResponse.json({ error: "记录不存在" }, { status: 404 });
-    }
-
-    console.error("Update request status failed:", error);
-    return NextResponse.json({ error: "更新失败，请稍后重试" }, { status: 500 });
+    return handleApiError(error, "Update request status failed:", "更新失败，请稍后重试");
   }
 }
